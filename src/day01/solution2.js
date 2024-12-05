@@ -11,6 +11,7 @@ async function main() {
     const [left, right] = readFilePairs(inputPath, '   ')
 
     const occurances = countOccurances(left, right)
+    console.log(occurances)
     
     let similarityScore = 0
     for(let i = 0; i < left.length; i++) {
@@ -21,6 +22,15 @@ async function main() {
 }
 
 /**
+ * Ensure that a the string representation of a number doesn't contain any funny carriage returns and similar.
+ * @param {String[]} numStrings Collection of numbers in string format
+ * @returns A collection of numbers
+ */
+function normalizeNumStrings(numStrings) {
+    return numStrings.map(value => value.trim())
+}
+
+/**
  * Counts the amount of times each value of `reference` appears in `target`
  * @param {*[]} reference 
  * @param {*[]} target 
@@ -28,6 +38,8 @@ async function main() {
  */
 function countOccurances(reference, target) {
     // Not that I'm mindful of performance, but this should maybe be faster?
+    reference = normalizeNumStrings(reference)
+    target = normalizeNumStrings(target)
     reference.sort()
     target.sort()
 
@@ -38,14 +50,12 @@ function countOccurances(reference, target) {
     let j = 0
     for(let i = 0; i < reference.length; i++) {
         let occurance = 0
-        for(j; j < target.length; j++) {
-            if(target[j] == reference[i]) {
+        while(j < target.length && target[j] <= reference[i]) {
+            if(target[j] === reference[i]) {
                 occurance += 1
             }
-            else if(target[j] > reference[i]) {
-                // Don't care about lower. Higher means we're out of occurances.
-                break;
-            }
+            
+            j++
         }
         occurances.push(occurance)
     }
