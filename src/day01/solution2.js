@@ -8,10 +8,11 @@ const {readFilePairs, inputPath} = require('./solution1')
 main()
 
 async function main() {
-    const [left, right] = readFilePairs(inputPath, '   ')
-
+    let [left, right] = readFilePairs(inputPath, '   ')
+    left = removeDuplicates(left)
     const occurances = countOccurances(left, right)
-    console.log(occurances)
+
+    left.sort() // of course, the most important part.
     
     let similarityScore = 0
     for(let i = 0; i < left.length; i++) {
@@ -30,6 +31,12 @@ function normalizeNumStrings(numStrings) {
     return numStrings.map(value => value.trim())
 }
 
+// Because I won't remember how to.
+function removeDuplicates(collection) {
+    // Of course I got this from stackoverflow.
+    return [...new Set(collection)]
+}
+
 /**
  * Counts the amount of times each value of `reference` appears in `target`
  * @param {*[]} reference 
@@ -43,21 +50,19 @@ function countOccurances(reference, target) {
     reference.sort()
     target.sort()
 
-    console.log('Target = ' + target[0])
-    console.log('Reference = ' + reference[0])
-
-    let occurances = []
+    let allOccurances = []
     let j = 0
     for(let i = 0; i < reference.length; i++) {
-        let occurance = 0
+        let occurances = 0
         while(j < target.length && target[j] <= reference[i]) {
             if(target[j] === reference[i]) {
-                occurance += 1
+                occurances += 1
             }
             
             j++
         }
-        occurances.push(occurance)
+        allOccurances.push(occurances)
     }
-    return occurances
+    console.log(allOccurances.length)
+    return allOccurances
 }
