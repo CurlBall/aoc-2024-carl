@@ -62,7 +62,7 @@ aoc/
 
 ### Personal Information (TODO)
 
-- **Programming Language**: [Python/JavaScript/Rust/etc.]
+- **Programming Language**: JavaScript
 - **Year**: [Current Year]
 - **Total Stars Collected**: [Total Stars]
 - **Favorite Challenge**: [Day X]
